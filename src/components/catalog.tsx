@@ -1,108 +1,122 @@
-import React from "react";
-import frutasImg from "../assets/frutas.jpg";
-import panImg from "../assets/pan.jpg";
-import vegetalesImg from "../assets/vegetales.jpg";
-import papaImg from "../assets/papa.jpg";
-
-const productos = [
-    {
-        id: 1,
-        nombre: "Frutas frescas excedentes",
-        descripcion: "Cajas de frutas de temporada de alta calidad.",
-        fecha: "2025-10-15",
-        imagen: frutasImg,
-        cantidad: "10 cajas disponibles",
-        calificacion: 4,
-    },
-    {
-        id: 2,
-        nombre: "Pan y bollería",
-        descripcion: "Pan recién horneado no vendido del día anterior.",
-        fecha: "2025-10-15",
-        imagen: panImg,
-        cantidad: "50 unidades disponibles",
-        calificacion: 5,
-    },
-    {
-        id: 3,
-        nombre: "Verduras y hortalizas",
-        descripcion: "Verduras de granjas locales, listas para entregar.",
-        fecha: "2025-10-15",
-        imagen: vegetalesImg,
-        cantidad: "20 cajas disponibles",
-        calificacion: 3,
-    },
-    {
-        id: 4,
-        nombre: "Papas excedentes",
-        descripcion: "Papas locales, listas para entregar.",
-        fecha: "2025-10-15",
-        imagen: papaImg,
-        cantidad: "20 cajas disponibles",
-        calificacion: 4,
-    },
-];
-
-const categorias = [
-    "Frutas y verduras",
-    "Panadería",
-    "Lácteos",
-    "Carnes",
-    "Bebidas",
-    "Otros excedentes",
-];
+import React, { useEffect, useState, useMemo } from "react";
+import type { Excess } from "../services/catalogService";
+import { getAllExcesses } from "../services/catalogService";
 
 const Catalog: React.FC = () => {
-    return (
-        <div className="flex flex-col md:flex-row gap-6">
-            {/* categorías */}
-            <aside className="w-full md:w-1/4 bg-white p-4 rounded shadow">
-                <h2 className="font-bold text-lg mb-4">Categorías</h2>
-                <ul className="space-y-2">
-                    {categorias.map((cat) => (
-                        <li key={cat} className="hover:text-green-600 cursor-pointer">
-                            {cat}
-                        </li>
-                    ))}
-                </ul>
-            </aside>
+  const [productos, setProductos] = useState<Excess[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+  const [categoriaSeleccionada, setCategoriaSeleccionada] = useState<string | null>(null);
+  const [busqueda, setBusqueda] = useState("");
 
-            {/* productos */}
-            <section className="flex-1 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {productos.map((prod) => (
-                    <div
-                        key={prod.id}
-                        className="bg-white rounded shadow p-4 flex flex-col items-center cursor-pointer hover:shadow-xl transition transform hover:scale-105"
-                        onClick={() => alert(`Ver detalles de: ${prod.nombre}`)}
-                    >
-                        <img
-                            src={prod.imagen || "https://via.placeholder.com/400x300"}
-                            alt={prod.nombre}
-                            className="w-full h-48 object-cover rounded mb-4"
-                        />
-                        <h3 className="font-bold text-lg text-center">{prod.nombre}</h3>
-                        <p className="text-gray-600 text-sm text-center">{prod.descripcion}</p>
-                        <p className="mt-2 text-gray-600 font-semibold">{prod.cantidad}</p>
+  useEffect(() => {
+    const fetchExcesses = async () => {
+      try {
+        const data = await getAllExcesses();
+        setProductos(data);
+      } catch (err) {
+        console.error("Error al obtener los excedentes:", err);
+        setError("No se pudieron cargar los productos");
+      } finally {
+        setLoading(false);
+      }
+    };
 
-                        {/* Calificación */}
-                        <div className="flex mt-2">
-                            {[1, 2, 3, 4, 5].map((i) => (
-                                <svg
-                                    key={i}
-                                    className={`w-5 h-5 ${i <= prod.calificacion ? "text-yellow-400" : "text-gray-300"
-                                        }`}
-                                    fill="currentColor"
-                                    viewBox="0 0 20 20"
-                                >
-                                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.957a1 1 0 00.95.69h4.162c.969 0 1.371 1.24.588 1.81l-3.37 2.448a1 1 0 00-.364 1.118l1.287 3.957c.3.921-.755 1.688-1.54 1.118l-3.37-2.448a1 1 0 00-1.176 0l-3.37 2.448c-.784.57-1.838-.197-1.539-1.118l1.286-3.957a1 1 0 00-.364-1.118L2.037 9.384c-.783-.57-.38-1.81.588-1.81h4.162a1 1 0 00.95-.69l1.286-3.957z" />
-                                </svg>
-                            ))}
-                        </div>
-                    </div>
-                ))}
-            </section>
-        </div>
-    );
+    fetchExcesses();
+  }, []);
+
+  const categorias = useMemo(() => {
+    const uniqueCats = new Set(productos.map((p) => p.category));
+    return Array.from(uniqueCats);
+  }, [productos]);
+
+  const productosFiltrados = productos.filter((p) => {
+    const coincideCategoria = categoriaSeleccionada ? p.category === categoriaSeleccionada : true;
+    const coincideBusqueda = p.productName.toLowerCase().includes(busqueda.toLowerCase());
+    return coincideCategoria && coincideBusqueda;
+  });
+
+  if (loading) return <p className="text-center mt-6 text-emerald-600">Cargando productos...</p>;
+  if (error) return <p className="text-center text-red-600 mt-6">{error}</p>;
+
+  return (
+    <div className="flex flex-col gap-6 rounded-lg">
+      {/* 🔍 Buscador elegante */}
+      <div className="w-full bg-white p-4 rounded-lg shadow-md border border-emerald-200 flex items-center">
+        <input
+          type="text"
+          placeholder="Buscar productos..."
+          value={busqueda}
+          onChange={(e) => setBusqueda(e.target.value)}
+          className="w-full p-3 rounded-lg border border-emerald-300 focus:outline-none focus:ring-2 focus:ring-emerald-500 text-gray-700 placeholder-gray-400"
+        />
+      </div>
+
+      {/* Contenido principal */}
+      <div className="flex flex-col md:flex-row gap-6">
+        {/* Categorías */}
+        <aside className="w-full md:w-1/4 bg-white p-5 rounded-lg shadow-md border border-emerald-200">
+          <h2 className="font-bold text-lg mb-4 text-emerald-700">Categorías</h2>
+          <ul className="space-y-2">
+            <li
+              className={`cursor-pointer transition ${!categoriaSeleccionada
+                  ? "text-emerald-600 font-semibold"
+                  : "text-gray-600 hover:text-emerald-600"
+                }`}
+              onClick={() => setCategoriaSeleccionada(null)}
+            >
+              Todos los productos
+            </li>
+            {categorias.map((cat) => (
+              <li
+                key={cat}
+                className={`cursor-pointer transition ${categoriaSeleccionada === cat
+                    ? "text-emerald-600 font-semibold"
+                    : "text-gray-600 hover:text-emerald-600"
+                  }`}
+                onClick={() => setCategoriaSeleccionada(cat)}
+              >
+                {cat}
+              </li>
+            ))}
+          </ul>
+        </aside>
+
+        {/* Productos */}
+        <section className="flex-1 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {productosFiltrados.length === 0 ? (
+            <p className="col-span-full text-center text-emerald-700 font-medium">
+              No hay productos que coincidan con la búsqueda
+            </p>
+          ) : (
+            productosFiltrados.map((prod) => (
+              <div
+                key={prod.excessId}
+                className="bg-white rounded-lg shadow-md p-4 flex flex-col items-center cursor-pointer border border-emerald-200 hover:shadow-xl hover:border-emerald-400 transition transform hover:scale-105"
+                onClick={() => alert(`Ver detalles de: ${prod.productName}`)}
+              >
+                <img
+                  src={
+                    "https://img.freepik.com/premium-vector/buffering-icon-vector_942802-2590.jpg?w=2000"
+                  }
+                  alt={prod.productName}
+                  className="w-full h-48 object-cover rounded mb-4 border border-emerald-100"
+                />
+                <h3 className="font-bold text-lg text-center text-emerald-700">
+                  {prod.productName}
+                </h3>
+                <p className="text-gray-600 text-sm text-center">{prod.description}</p>
+                <p className="mt-2 text-emerald-600 font-semibold">
+                  {prod.quantity} {prod.unitMeasurement}
+                </p>
+                <p className="text-gray-500 text-sm mt-1">{prod.city}</p>
+              </div>
+            ))
+          )}
+        </section>
+      </div>
+    </div>
+  );
 };
 
 export default Catalog;
