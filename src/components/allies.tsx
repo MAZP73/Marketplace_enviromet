@@ -10,14 +10,14 @@ interface Ally {
 
 const Allies: React.FC = () => {
     const allAllies: Ally[] = [
-        { id: 1, name: "EcoFood Rescue", type: "Fundación Benéfica", location: "Bogotá", image: "https://via.placeholder.com/150/047857/FFFFFF?text=EcoFood" },
-        { id: 2, name: "Fresh Grocers Inc.", type: "Supermercado", location: "Medellín", image: "https://via.placeholder.com/150/10B981/FFFFFF?text=Grocers" },
-        { id: 3, name: "Harvest Hope", type: "Organización Comunitaria", location: "Cali", image: "https://via.placeholder.com/150/D9B99B/000000?text=Harvest" },
-        { id: 4, name: "DailyBites Catering", type: "Restaurante", location: "Barranquilla", image: "https://via.placeholder.com/150/FACC15/000000?text=DailyBites" },
-        { id: 5, name: "Sustain Farms", type: "Productor Agrícola", location: "Cartagena", image: "https://via.placeholder.com/150/065F46/FFFFFF?text=Sustain" },
-        { id: 6, name: "The Golden Bakery", type: "Panadería", location: "Manizales", image: "https://via.placeholder.com/150/F59E0B/FFFFFF?text=Bakery" },
-        { id: 7, name: "City Food Bank", type: "Banco de Alimentos", location: "Pereira", image: "https://via.placeholder.com/150/D1FAE5/000000?text=Food+Bank" },
-        { id: 8, name: "Share Plate Foundation", type: "Fundación Benéfica", location: "Bogotá", image: "https://via.placeholder.com/150/6EE7B7/000000?text=SharePlate" },
+        { id: 1, name: "EcoFood Rescue", type: "Fundación Benéfica", location: "Bogotá", image: "https://img.freepik.com/premium-vector/buffering-icon-vector_942802-2590.jpg?w=2000" },
+        { id: 2, name: "Fresh Grocers Inc.", type: "Supermercado", location: "Medellín", image: "https://img.freepik.com/premium-vector/buffering-icon-vector_942802-2590.jpg?w=2000" },
+        { id: 3, name: "Harvest Hope", type: "Organización Comunitaria", location: "Cali", image: "https://img.freepik.com/premium-vector/buffering-icon-vector_942802-2590.jpg?w=2000" },
+        { id: 4, name: "DailyBites Catering", type: "Restaurante", location: "Barranquilla", image: "https://img.freepik.com/premium-vector/buffering-icon-vector_942802-2590.jpg?w=2000" },
+        { id: 5, name: "Sustain Farms", type: "Productor Agrícola", location: "Cartagena", image: "https://img.freepik.com/premium-vector/buffering-icon-vector_942802-2590.jpg?w=2000" },
+        { id: 6, name: "The Golden Bakery", type: "Panadería", location: "Manizales", image: "https://img.freepik.com/premium-vector/buffering-icon-vector_942802-2590.jpg?w=2000" },
+        { id: 7, name: "City Food Bank", type: "Banco de Alimentos", location: "Pereira", image: "https://img.freepik.com/premium-vector/buffering-icon-vector_942802-2590.jpg?w=2000" },
+        { id: 8, name: "Share Plate Foundation", type: "Fundación Benéfica", location: "Bogotá", image: "https://img.freepik.com/premium-vector/buffering-icon-vector_942802-2590.jpg?w=2000" },
         { id: 8, name: "Share Plate Foundation", type: "Fundación Benéfica", location: "Bogotá", image: "https://via.placeholder.com/150/6EE7B7/000000?text=SharePlate" },
         { id: 9, name: "GreenLeaf Markets", type: "Supermercado", location: "Medellín", image: "https://via.placeholder.com/150/34D399/000000?text=GreenLeaf" },
         { id: 10, name: "Community Harvesters", type: "Organización Comunitaria", location: "Cali", image: "https://via.placeholder.com/150/F3F4F6/000000?text=Harvesters" },
@@ -28,8 +28,8 @@ const Allies: React.FC = () => {
     ];
 
     const [search, setSearch] = useState("");
-    const [typeFilter, setTypeFilter] = useState("Todos");
-    const [locationFilter, setLocationFilter] = useState("Todos");
+    const [typeFilter, setTypeFilter] = useState("Categoria");
+    const [locationFilter, setLocationFilter] = useState("Ubicacion");
     const [currentPage, setCurrentPage] = useState(1);
     const itemsPerPage = 12;
 
@@ -37,8 +37,8 @@ const Allies: React.FC = () => {
         return allAllies.filter(
             (ally) =>
                 ally.name.toLowerCase().includes(search.toLowerCase()) &&
-                (typeFilter === "Todos" || ally.type === typeFilter) &&
-                (locationFilter === "Todos" || ally.location === locationFilter)
+                (typeFilter === "Categoria" || ally.type === typeFilter) &&
+                (locationFilter === "Ubicacion" || ally.location === locationFilter)
         );
     }, [search, typeFilter, locationFilter]);
 
@@ -46,8 +46,8 @@ const Allies: React.FC = () => {
     const startIndex = (currentPage - 1) * itemsPerPage;
     const currentAllies = filteredAllies.slice(startIndex, startIndex + itemsPerPage);
 
-    const types = ["Todos", ...new Set(allAllies.map((a) => a.type))];
-    const locations = ["Todos", ...new Set(allAllies.map((a) => a.location))];
+    const types = ["Categoria", ...new Set(allAllies.map((a) => a.type))];
+    const locations = ["Ubicacion", ...new Set(allAllies.map((a) => a.location))];
 
     const goToPage = (page: number) => {
         if (page >= 1 && page <= totalPages) setCurrentPage(page);

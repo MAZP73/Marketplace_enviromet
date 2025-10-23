@@ -40,7 +40,7 @@ const Catalog: React.FC = () => {
   if (error) return <p className="text-center text-red-600 mt-6">{error}</p>;
 
   return (
-    <div className="flex flex-col gap-6 rounded-lg">
+    <div className="flex flex-col gap-6 rounded-lg p-5">
       {/* 🔍 Buscador elegante */}
       <div className="w-full bg-white p-4 rounded-lg shadow-md border border-emerald-200 flex items-center">
         <input
