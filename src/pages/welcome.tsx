@@ -14,7 +14,7 @@ const cardVariants = {
 const Welcome: React.FC = () => {
     return (
         <div className="min-h-screen overflow-x-hidden">
-            {/* Banner animado */}
+            {/* Banner */}
             <motion.div
                 className="relative"
                 initial={{ opacity: 0, y: -40 }}
@@ -24,7 +24,6 @@ const Welcome: React.FC = () => {
                 <BannerCarousel />
             </motion.div>
 
-            {/* Sección de tarjetas */}
             <motion.div
                 className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6"
                 initial="hidden"
@@ -72,7 +71,7 @@ const Welcome: React.FC = () => {
                         transition={{ delay: i * 0.15, duration: 0.6 }}
                         className="bg-white shadow-md rounded-2xl overflow-hidden hover:shadow-xl transition transform hover:-translate-y-2 flex flex-col"
                     >
-                        {/* Imagen responsiva con animación */}
+
                         <motion.img
                             src={card.img}
                             alt={card.alt}
@@ -81,7 +80,7 @@ const Welcome: React.FC = () => {
                             transition={{ duration: 0.3 }}
                         />
 
-                        {/* Texto */}
+
                         <div className="flex-1 p-5 flex flex-col justify-between">
                             <div>
                                 <h2 className="text-lg sm:text-xl font-semibold mb-2 text-center lg:text-left">

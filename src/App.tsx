@@ -5,7 +5,7 @@ import Catalog from "./components/catalog";
 import Dashboard from "./components/dashboardCatalog";
 import Allies from "./components/allies";
 import Login from "./components/login";
-//import Register from "./components/register";
+import Register from "./components/register";
 import Welcome from "./pages/welcome";
 import Home from "./pages/home";
 
@@ -23,6 +23,7 @@ const AppContent: React.FC = () => {
                     <Route path="/" element={<Home />} />
                     <Route path="/welcome" element={<Welcome />} />
                     <Route path="/login" element={<Login />} />
+                    <Route path="/register" element={<Register />} />
                     <Route path="/food" element={<Catalog />} />
                     <Route path="/dashboard" element={<Dashboard />} />
                     <Route path="/expiring" element={<Catalog />} />

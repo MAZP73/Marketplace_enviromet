@@ -24,3 +24,11 @@ export const reservationsApi = axios.create({
     "Content-Type": "application/json",
   },
 });
+
+//usuarios
+export const usersApi = axios.create({
+  baseURL: API_ENDPOINTS.users,
+  headers: {
+    "Content-Type": "application/json",
+  },
+});
