@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import BannerCarousel from "../components/BannerCarousel";
+import BannerCarousel from "../components/Headers/BannerCarousel";
 import disponiblesImg from "../assets/disponibles.jpg";
 import fundacionesImg from "../assets/fundaciones.jpg";
 import empresasImg from "../assets/empresas.jpg";
@@ -14,7 +14,7 @@ const cardVariants = {
 const Welcome: React.FC = () => {
     return (
         <div className="min-h-screen overflow-x-hidden">
-            {/* Banner */}
+
             <motion.div
                 className="relative"
                 initial={{ opacity: 0, y: -40 }}

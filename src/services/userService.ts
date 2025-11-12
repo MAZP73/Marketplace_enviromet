@@ -48,7 +48,7 @@ export const loginUser = async (credentials: { email: string; password: string }
 export const getUserProfile = async () => {
     try {
         const token = localStorage.getItem("token");
-        const response = await usersApi.get("/auth/profile", {
+        const response = await usersApi.get("/auth/me", {
             headers: { Authorization: `Bearer ${token}` },
         });
         return response.data;

@@ -1,7 +1,7 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
-import { registerUser } from "../services/userService";
-import type { User } from "../services/userService";
+import { registerUser } from "../../services/userService";
+import type { User } from "../../services/userService";
 
 const Register = () => {
     const navigate = useNavigate();
@@ -74,8 +74,7 @@ const Register = () => {
         try {
             const response = await registerUser(formData);
             console.log("Usuario registrado:", response);
-            setSuccess("Registro exitoso. Redirigiendo...");
-            setTimeout(() => navigate("/login"), 2000);
+            setTimeout(() => navigate("/login"), 1000);
         } catch (err: any) {
             console.error("Error en registro:", err);
             setError(err.response?.data?.message || "Error al registrar usuario");
@@ -86,7 +85,7 @@ const Register = () => {
 
     return (
         <div className="flex items-stretch bg-gray-50 justify-center">
-            {/* Imagen lateral */}
+
             <div
                 className="hidden md:flex w-1/2 bg-cover bg-center items-center justify-center text-white rounded-l-xl"
                 style={{
@@ -104,7 +103,6 @@ const Register = () => {
                 </div>
             </div>
 
-            {/* Formulario */}
             <div className="w-full md:w-1/2 flex items-center justify-center bg-white p-8 rounded-r-xl shadow-md">
                 <div className="w-full max-w-md">
                     <div className="mb-4 text-center">
@@ -115,7 +113,7 @@ const Register = () => {
                     </div>
 
                     <form onSubmit={handleSubmit} className="space-y-3">
-                        {/* Nombre */}
+
                         <div>
                             <label className="block text-gray-700 font-medium mb-1">
                                 Nombre de la organización o empresa
@@ -136,7 +134,6 @@ const Register = () => {
                             )}
                         </div>
 
-                        {/* Tipo */}
                         <div>
                             <label className="block text-gray-700 font-medium mb-1">
                                 Tipo
@@ -159,7 +156,6 @@ const Register = () => {
                             )}
                         </div>
 
-                        {/* NIT */}
                         <div>
                             <label className="block text-gray-700 font-medium mb-1">
                                 NIT o número tributario
@@ -180,7 +176,6 @@ const Register = () => {
                             )}
                         </div>
 
-                        {/* Email */}
                         <div>
                             <label className="block text-gray-700 font-medium mb-1">
                                 Correo corporativo
@@ -201,7 +196,6 @@ const Register = () => {
                             )}
                         </div>
 
-                        {/* Contraseña */}
                         <div>
                             <label className="block text-gray-700 font-medium mb-1">
                                 Contraseña
@@ -221,7 +215,6 @@ const Register = () => {
                             )}
                         </div>
 
-                        {/* Teléfono */}
                         <div>
                             <label className="block text-gray-700 font-medium mb-1">
                                 Teléfono de contacto
@@ -242,7 +235,6 @@ const Register = () => {
                             )}
                         </div>
 
-                        {/* Ciudad y País */}
                         <div className="grid grid-cols-2 gap-3">
                             <div>
                                 <label className="block text-gray-700 font-medium mb-1">
@@ -284,13 +276,11 @@ const Register = () => {
                             </div>
                         </div>
 
-                        {/* Mensajes generales */}
                         {error && <p className="text-red-500 text-sm text-center">{error}</p>}
                         {success && (
                             <p className="text-emerald-600 text-sm text-center">{success}</p>
                         )}
 
-                        {/* Botón */}
                         <button
                             type="submit"
                             disabled={loading}

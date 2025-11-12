@@ -6,17 +6,23 @@ export interface ReservationData {
   company_id: number;
   organization_id: number;
   quantity: number;
-  status?: "reserved" | "completed" | "canceled";
+  status?: "in process" | "completed";
 }
 
-// Obtener reservas empresa
 export const getCompanyReservations = async (companyId: number) => {
-  const res = await reservationsApi.get(`/company/${companyId}`);
+  const res = await reservationsApi.get(`reservations/company/${companyId}`);
   return res.data;
 };
 
-// Obtener reservas organización
 export const getOrganizationReservations = async (organizationId: number) => {
-  const res = await reservationsApi.get(`/organization/${organizationId}`);
+  const res = await reservationsApi.get(`reservations/organization/${organizationId}`);
+  return res.data;
+};
+
+export const updateReservationStatus = async (
+  id: number,
+  status: "completed"
+) => {
+  const res = await reservationsApi.patch(`/reservations/${id}`, { status });
   return res.data;
 };

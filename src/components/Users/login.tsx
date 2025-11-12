@@ -1,7 +1,7 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
-import { loginUser } from "../services/userService";
-import type { Logindt } from "../services/userService";
+import { loginUser } from "../../services/userService";
+import type { Logindt } from "../../services/userService";
 
 const Login = () => {
     const navigate = useNavigate();
@@ -56,8 +56,15 @@ const Login = () => {
         try {
             const response = await loginUser(formData);
             console.log("Inicio de sesión exitoso:", response);
-            setSuccess("Inicio de sesión exitoso. Redirigiendo...");
-            setTimeout(() => navigate("/dashboard"), 1500);
+
+            if (response.token) {
+                localStorage.setItem("token", response.token);
+            }
+            if (response.user?.id) {
+                localStorage.setItem("companyId", response.user.id.toString());
+            }
+
+            setTimeout(() => navigate("/welcome"), 1000);
         } catch (err: any) {
             console.error("Error en inicio de sesión:", err);
             setError(err.response?.data?.message || "Credenciales incorrectas");
@@ -122,6 +129,7 @@ const Login = () => {
                         )}
                     </div>
 
+                    {/* PASSWORD */}
                     <div>
                         <label
                             htmlFor="password"
@@ -144,9 +152,7 @@ const Login = () => {
                             required
                         />
                         {errors.password && (
-                            <p className="text-red-500 text-sm mt-1">
-                                {errors.password}
-                            </p>
+                            <p className="text-red-500 text-sm mt-1">{errors.password}</p>
                         )}
                     </div>
 
