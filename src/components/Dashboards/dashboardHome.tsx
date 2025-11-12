@@ -4,6 +4,14 @@ import { getUserProfile } from "../../services/userService";
 import { getCompanyRequests } from "../../services/requestService";
 import { getAllExcesses } from "../../services/catalogService";
 import { Eye } from "lucide-react";
+import {
+    VictoryPie,
+    VictoryBar,
+    VictoryChart,
+    VictoryAxis,
+    VictoryLine,
+    VictoryTheme,
+} from "victory";
 
 interface RequestData {
     id: number;
@@ -108,6 +116,15 @@ const DashboardHome: React.FC = () => {
         (r) => (r?.request_status ?? "").toLowerCase() === "rejected"
     ).length;
 
+    if (!requests.length && !excessesCount) {
+        return (
+            <div className="text-center text-gray-500 py-20">
+                <h2 className="text-xl font-semibold mb-2">Esperando nuevos datos...</h2>
+                <p className="text-sm">Aún no se han registrado ofertas ni solicitudes.</p>
+            </div>
+        );
+    }
+
     return (
         <div>
             <h1 className="text-2xl font-bold mb-2">
@@ -131,6 +148,97 @@ const DashboardHome: React.FC = () => {
                 <div className="bg-white rounded-xl p-6 shadow-sm border">
                     <p className="text-sm text-gray-500">Solicitudes rechazadas</p>
                     <h3 className="text-3xl font-bold mt-2">{rejectedCount}</h3>
+                </div>
+            </div>
+
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-12">
+
+                <div className="bg-white p-6 rounded-2xl shadow-md border flex flex-col items-center">
+                    <h3 className="text-lg font-semibold mb-4 text-gray-700">
+                        Ofertas Creadas
+                    </h3>
+                    <VictoryPie
+                        data={[
+                            { x: "Ofertas", y: excessesCount },
+                            { x: "Pendientes", y: pendingCount },
+                            { x: "Rechazadas", y: rejectedCount },
+                        ]}
+                        colorScale={["#22c55e", "#facc15", "#ef4444"]}
+                        animate={{ duration: 1000 }}
+                        innerRadius={70}
+                        labels={({ datum }) => `${datum.x}\n${datum.y}`}
+                        style={{
+                            labels: { fill: "#374151", fontSize: 12, fontWeight: "500" },
+                        }}
+                    />
+                </div>
+
+                <div className="bg-white p-6 rounded-2xl shadow-md border flex flex-col items-center">
+                    <h3 className="text-lg font-semibold mb-4 text-gray-700">
+                        Solicitudes Pendientes
+                    </h3>
+                    <VictoryChart
+                        domainPadding={20}
+                        theme={VictoryTheme.material}
+                        animate={{ duration: 1000 }}
+                    >
+                        <VictoryAxis
+                            style={{
+                                axis: { stroke: "#e5e7eb" },
+                                tickLabels: { fill: "#6b7280", fontSize: 10 },
+                            }}
+                        />
+                        <VictoryAxis
+                            dependentAxis
+                            style={{
+                                grid: { stroke: "#e5e7eb" },
+                                tickLabels: { fill: "#6b7280", fontSize: 10 },
+                            }}
+                        />
+                        <VictoryBar
+                            data={[
+                                { x: "Ofertas", y: excessesCount },
+                                { x: "Pendientes", y: pendingCount },
+                                { x: "Rechazadas", y: rejectedCount },
+                            ]}
+                            style={{ data: { fill: "#facc15", width: 30, borderRadius: 5 } }}
+                            cornerRadius={5}
+                        />
+                    </VictoryChart>
+                </div>
+
+                <div className="bg-white p-6 rounded-2xl shadow-md border flex flex-col items-center">
+                    <h3 className="text-lg font-semibold mb-4 text-gray-700">
+                        Solicitudes Rechazadas
+                    </h3>
+                    <VictoryChart theme={VictoryTheme.material} animate={{ duration: 1000 }}>
+                        <VictoryLine
+                            data={[
+                                { x: 1, y: excessesCount },
+                                { x: 2, y: pendingCount },
+                                { x: 3, y: rejectedCount },
+                            ]}
+                            interpolation="natural"
+                            style={{
+                                data: { stroke: "#ef4444", strokeWidth: 3 },
+                            }}
+                        />
+                        <VictoryAxis
+                            tickValues={[1, 2, 3]}
+                            tickFormat={["Ofertas", "Pendientes", "Rechazadas"]}
+                            style={{
+                                axis: { stroke: "#e5e7eb" },
+                                tickLabels: { fill: "#6b7280", fontSize: 10 },
+                            }}
+                        />
+                        <VictoryAxis
+                            dependentAxis
+                            style={{
+                                grid: { stroke: "#e5e7eb" },
+                                tickLabels: { fill: "#6b7280", fontSize: 10 },
+                            }}
+                        />
+                    </VictoryChart>
                 </div>
             </div>
 
