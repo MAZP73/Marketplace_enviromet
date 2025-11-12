@@ -1,7 +1,6 @@
 import axios from "axios";
 import { API_ENDPOINTS } from "../api/endpoints";
 
-//catálogo
 export const catalogApi = axios.create({
   baseURL: API_ENDPOINTS.catalog,
   headers: {
@@ -9,7 +8,6 @@ export const catalogApi = axios.create({
   },
 });
 
-//solicitudes
 export const requestsApi = axios.create({
   baseURL: API_ENDPOINTS.requests,
   headers: {
@@ -17,7 +15,6 @@ export const requestsApi = axios.create({
   },
 });
 
-//reservas
 export const reservationsApi = axios.create({
   baseURL: API_ENDPOINTS.reservations,
   headers: {
@@ -25,7 +22,6 @@ export const reservationsApi = axios.create({
   },
 });
 
-//usuarios
 export const usersApi = axios.create({
   baseURL: API_ENDPOINTS.users,
   headers: {

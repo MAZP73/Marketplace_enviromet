@@ -102,7 +102,6 @@ const Login = () => {
                 </p>
 
                 <form onSubmit={handleSubmit} className="space-y-4">
-                    {/* EMAIL */}
                     <div>
                         <label
                             htmlFor="email"
@@ -129,7 +128,6 @@ const Login = () => {
                         )}
                     </div>
 
-                    {/* PASSWORD */}
                     <div>
                         <label
                             htmlFor="password"
