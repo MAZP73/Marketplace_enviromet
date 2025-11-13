@@ -1,29 +1,9 @@
 import { Link } from "react-router-dom";
 import { Leaf, Handshake, Lightbulb, Calendar, Rocket, Globe } from "lucide-react";
-import { Helmet } from "react-helmet-async";
 
 const About = () => {
     return (
         <main className="bg-gray-50 text-gray-800">
-            <Helmet>
-                <title>Sobre Nosotros | Marketplace Enviromet</title>
-                <meta
-                    name="description"
-                    content="Descubre cómo nació Marketplace Enviromet, una plataforma que impulsa la economía circular, conecta empresas y reduce el desperdicio."
-                />
-                <meta
-                    name="keywords"
-                    content="economía circular, sostenibilidad, colaboración empresarial, reducción de desperdicios, reutilización, marketplace ecológico"
-                />
-                <meta property="og:title" content="Sobre Nosotros | Marketplace Enviromet" />
-                <meta
-                    property="og:description"
-                    content="Conectamos empresas para reducir desperdicios y fomentar la economía circular."
-                />
-                <meta property="og:image" content="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1200&q=80" />
-                <meta property="og:type" content="website" />
-            </Helmet>
-
             <section
                 className="relative flex items-center justify-center text-center bg-emerald-800 text-white overflow-hidden h-[60vh] md:h-[70vh]"
                 aria-labelledby="hero-heading"
@@ -59,7 +39,7 @@ const About = () => {
                         {
                             icon: Leaf,
                             title: "Sostenibilidad",
-                            text: "Promovemos la sreutilización de excedentes, reduciendo el impacto ambiental y fomentando prácticas responsables."
+                            text: "Promovemos la reutilización de excedentes, reduciendo el impacto ambiental y fomentando prácticas responsables."
                         },
                         {
                             icon: Handshake,

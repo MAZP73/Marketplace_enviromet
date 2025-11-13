@@ -1,31 +1,6 @@
-import { Helmet } from "react-helmet-async";
-
 const ImpactoSocial = () => {
     return (
         <main className="bg-gray-50 text-gray-800">
-
-            <Helmet>
-                <title>Impacto Social | Marketplace Enviromet</title>
-                <meta
-                    name="description"
-                    content="Conoce el impacto social y ambiental de Marketplace Enviromet. Reducimos desperdicio alimentario, fortalecemos comunidades y fomentamos la economía circular."
-                />
-                <meta
-                    name="keywords"
-                    content="impacto social, economía circular, sostenibilidad, reducción de desperdicios, recuperación de alimentos, responsabilidad ambiental"
-                />
-                <meta property="og:title" content="Impacto Social | Marketplace Enviromet" />
-                <meta
-                    property="og:description"
-                    content="Descubre cómo Enviromet impulsa la economía circular y beneficia a miles de familias y empresas sostenibles."
-                />
-                <meta
-                    property="og:image"
-                    content="https://images.unsplash.com/photo-1509099836639-18ba1795216d?auto=format&fit=crop&w=1200&q=80"
-                />
-                <meta property="og:type" content="website" />
-            </Helmet>
-
             <section className="max-w-7xl mx-auto px-4 sm:px-6 py-16 text-center" aria-labelledby="pilares-heading">
                 <h1 id="pilares-heading" className="text-2xl sm:text-3xl font-bold text-gray-800 mb-4">
                     Nuestros Pilares de Impacto
