@@ -47,7 +47,7 @@ const SolicitudesPendientes: React.FC<Props> = ({ companyId }) => {
                 );
                 setSolicitudes(propias);
             } catch (err) {
-                console.error(" Error al cargar solicitudes:", err);
+                console.error("Error al cargar solicitudes:", err);
                 setError("Error al cargar las solicitudes.");
             } finally {
                 setCargando(false);
@@ -106,7 +106,7 @@ const SolicitudesPendientes: React.FC<Props> = ({ companyId }) => {
             );
             setModoEdicion(null);
         } catch (error) {
-            console.error(" Error al actualizar solicitud:", error);
+            console.error("Error al actualizar solicitud:", error);
             alert("Hubo un error al actualizar la solicitud.");
         }
     };
@@ -116,7 +116,11 @@ const SolicitudesPendientes: React.FC<Props> = ({ companyId }) => {
     };
 
     if (cargando)
-        return <p className="text-center text-gray-600 mt-8">Cargando solicitudes...</p>;
+        return (
+            <p className="text-center text-gray-600 mt-8">
+                Cargando solicitudes...
+            </p>
+        );
 
     if (error)
         return <p className="text-center text-red-500 mt-8">{error}</p>;
@@ -145,7 +149,11 @@ const SolicitudesPendientes: React.FC<Props> = ({ companyId }) => {
                         value={filtroEstado}
                         onChange={(e) =>
                             setFiltroEstado(
-                                e.target.value as "todas" | "pending" | "accepted" | "rejected"
+                                e.target.value as
+                                | "todas"
+                                | "pending"
+                                | "accepted"
+                                | "rejected"
                             )
                         }
                         className="border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -178,60 +186,83 @@ const SolicitudesPendientes: React.FC<Props> = ({ companyId }) => {
                             <th className="py-3 px-4 font-medium">Mensaje</th>
                             <th className="py-3 px-4 font-medium">Fecha</th>
                             <th className="py-3 px-4 font-medium">Estado</th>
-                            <th className="py-3 px-4 font-medium text-center">Acciones</th>
+                            <th className="py-3 px-4 font-medium text-center">
+                                Acciones
+                            </th>
                         </tr>
                     </thead>
                     <tbody>
                         {solicitudesPaginadas.map((req) => (
-                            <tr key={req.id} className="border-b hover:bg-gray-50">
+                            <tr
+                                key={req.id}
+                                className="border-b hover:bg-gray-50 transition-colors"
+                            >
                                 <td className="py-3 px-4 font-medium text-gray-800">
                                     #{req.id}
                                 </td>
                                 <td className="py-3 px-4">{req.user_id}</td>
                                 <td className="py-3 px-4">{req.message || "-"}</td>
                                 <td className="py-3 px-4">
-                                    {new Date(req.created_at).toLocaleDateString()}
+                                    {new Date(req.created_at).toLocaleDateString(
+                                        "es-CO"
+                                    )}
                                 </td>
                                 <td className="py-3 px-4">
                                     {req.request_status === "pending" ? (
-                                        <span className="text-yellow-600 font-medium">Pendiente</span>
+                                        <span className="text-yellow-600 font-medium">
+                                            Pendiente
+                                        </span>
                                     ) : req.request_status === "accepted" ? (
-                                        <span className="text-green-600 font-medium">Aceptada</span>
+                                        <span className="text-green-600 font-medium">
+                                            Aceptada
+                                        </span>
                                     ) : (
-                                        <span className="text-red-600 font-medium">Rechazada</span>
+                                        <span className="text-red-600 font-medium">
+                                            Rechazada
+                                        </span>
                                     )}
                                 </td>
                                 <td className="py-3 px-4 text-center flex justify-center gap-2">
                                     <button
                                         onClick={() => verDetalle(req.surplus_id)}
-                                        className="text-gray-600 hover:text-blue-600"
+                                        className="text-gray-600 hover:text-blue-600 text-sm"
+                                        title="Ver detalle"
                                     >
-                                        <Eye size={18} />
+                                        <Eye size={16} />
                                     </button>
 
                                     {modoEdicion === req.id ? (
-                                        <div className="space-x-2">
+                                        <div className="flex gap-2">
                                             <button
-                                                onClick={() => manejarAccion(req.id, "rechazar")}
-                                                className="bg-red-100 text-red-600 px-3 py-1 rounded-lg hover:bg-red-200"
-                                            >
-                                                Rechazar
-                                            </button>
-                                            <button
-                                                onClick={() => manejarAccion(req.id, "aceptar")}
-                                                className="bg-green-100 text-green-600 px-3 py-1 rounded-lg hover:bg-green-200"
+                                                onClick={() =>
+                                                    manejarAccion(req.id, "aceptar")
+                                                }
+                                                className="bg-green-100 text-green-700 px-2 py-1 rounded-md text-xs hover:bg-green-200"
                                             >
                                                 Aceptar
+                                            </button>
+                                            <button
+                                                onClick={() =>
+                                                    manejarAccion(req.id, "rechazar")
+                                                }
+                                                className="bg-red-100 text-red-700 px-2 py-1 rounded-md text-xs hover:bg-red-200"
+                                            >
+                                                Rechazar
                                             </button>
                                         </div>
                                     ) : (
                                         <button
                                             onClick={() =>
-                                                setModoEdicion(modoEdicion === req.id ? null : req.id)
+                                                setModoEdicion(
+                                                    modoEdicion === req.id
+                                                        ? null
+                                                        : req.id
+                                                )
                                             }
                                             className="text-blue-600 hover:text-blue-800"
+                                            title="Editar solicitud"
                                         >
-                                            <Pencil size={18} />
+                                            <Pencil size={16} />
                                         </button>
                                     )}
                                 </td>
@@ -247,8 +278,8 @@ const SolicitudesPendientes: React.FC<Props> = ({ companyId }) => {
                         disabled={pagina === 1}
                         onClick={() => setPagina((p) => p - 1)}
                         className={`px-3 py-1 border rounded-lg ${pagina === 1
-                            ? "text-gray-400 border-gray-200"
-                            : "hover:bg-gray-100"
+                                ? "text-gray-400 border-gray-200"
+                                : "hover:bg-gray-100"
                             }`}
                     >
                         ←
@@ -260,8 +291,8 @@ const SolicitudesPendientes: React.FC<Props> = ({ companyId }) => {
                         disabled={pagina === totalPaginas}
                         onClick={() => setPagina((p) => p + 1)}
                         className={`px-3 py-1 border rounded-lg ${pagina === totalPaginas
-                            ? "text-gray-400 border-gray-200"
-                            : "hover:bg-gray-100"
+                                ? "text-gray-400 border-gray-200"
+                                : "hover:bg-gray-100"
                             }`}
                     >
                         →

@@ -92,7 +92,11 @@ const ReservasActivas: React.FC = () => {
         try {
             setActualizando(true);
             await updateReservationStatus(id, "completed");
-            setReservas((prev) => prev.filter((r) => r.id !== id));
+            setReservas((prev) =>
+                prev.map((r) =>
+                    r.id === id ? { ...r, reservation_status: "completed" } : r
+                )
+            );
             setMostrarModal(false);
         } catch (error) {
             alert("Error al actualizar el estado de la reserva.");
@@ -100,6 +104,8 @@ const ReservasActivas: React.FC = () => {
             setActualizando(false);
         }
     };
+
+
 
     if (!companyId)
         return <p className="text-center text-red-500 mt-8">No hay companyId en localStorage.</p>;
