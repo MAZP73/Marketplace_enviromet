@@ -83,37 +83,35 @@ const Home: React.FC = () => {
     return (
         <div className="bg-gray-50 min-h-screen text-gray-800 overflow-x-hidden">
 
-            <section className="max-w-6xl mx-auto px-6 py-16 flex flex-col lg:flex-row items-center">
-                <div ref={bannerTextRef} className="flex-1 mb-10 lg:mb-0">
-                    <h1 className="text-4xl font-extrabold mb-4 text-green-700 leading-tight text-center lg:text-left">
+            <section className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-20 flex flex-col-reverse lg:flex-row items-center gap-10">
+                <div ref={bannerTextRef} className="flex-1 text-center lg:text-left space-y-6">
+                    <h1 className="text-3xl sm:text-4xl font-extrabold text-green-700 leading-tight">
                         Conecta, Colabora y Crece: Cómo Funciona Nuestro Marketplace
                     </h1>
-                    <p className="text-gray-600 mb-6 text-center lg:text-left">
+                    <p className="text-gray-600">
                         Descubre cómo nuestra plataforma facilita la conexión entre
                         organizaciones para impulsar el crecimiento y la sostenibilidad.
                     </p>
-                    <div className="text-center lg:text-left">
-                        <Link
-                            to="/register"
-                            className="bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-xl font-semibold transition transform hover:scale-105"
-                        >
-                            Únete a la Red y Empieza a Conectar Ahora
-                        </Link>
-                    </div>
+                    <Link
+                        to="/register"
+                        className="inline-block bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-xl font-semibold transition transform hover:scale-105"
+                    >
+                        Únete a la Red y Empieza a Conectar Ahora
+                    </Link>
                 </div>
 
-                <div ref={bannerImgRef} className="flex-1">
+                <div ref={bannerImgRef} className="flex-1 w-full">
                     <img
                         src={bannerImg}
                         alt="Marketplace conexión"
-                        className="rounded-2xl shadow-lg w-full object-cover"
+                        className="rounded-2xl shadow-lg w-full h-64 sm:h-80 lg:h-full object-cover"
                     />
                 </div>
             </section>
 
-            <section className="bg-white py-16">
-                <div className="max-w-6xl mx-auto text-center px-6">
-                    <h2 className="text-2xl font-bold text-green-700 mb-10">
+            <section className="bg-white py-16 px-4 sm:px-6 lg:px-8">
+                <div className="max-w-6xl mx-auto text-center">
+                    <h2 className="text-2xl sm:text-3xl font-bold text-green-700 mb-10">
                         El Proceso de Conexión en 4 Sencillos Pasos
                     </h2>
 
@@ -159,10 +157,10 @@ const Home: React.FC = () => {
                     </div>
                 </div>
             </section>
-|
-            <section className="py-16 bg-gray-100">
-                <div className="max-w-6xl mx-auto text-center px-6">
-                    <h2 className="text-2xl font-bold text-green-700 mb-6">
+
+            <section className="py-16 bg-gray-100 px-4 sm:px-6 lg:px-8">
+                <div className="max-w-6xl mx-auto text-center">
+                    <h2 className="text-2xl sm:text-3xl font-bold text-green-700 mb-6">
                         Beneficios de Unirte a Nuestra Red
                     </h2>
                     <p className="text-gray-600 mb-10">
@@ -213,9 +211,9 @@ const Home: React.FC = () => {
 
             <section
                 ref={finalSectionRef}
-                className="bg-green-50 py-16 text-center"
+                className="bg-green-50 py-16 text-center px-4 sm:px-6 lg:px-8"
             >
-                <h2 className="text-2xl font-bold text-green-700 mb-4">
+                <h2 className="text-2xl sm:text-3xl font-bold text-green-700 mb-4">
                     ¿Listo para empezar?
                 </h2>
                 <p className="text-gray-600 mb-6">

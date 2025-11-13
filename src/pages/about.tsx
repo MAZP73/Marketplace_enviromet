@@ -59,7 +59,7 @@ const About = () => {
                         {
                             icon: Leaf,
                             title: "Sostenibilidad",
-                            text: "Promovemos la reutilización de excedentes, reduciendo el impacto ambiental y fomentando prácticas responsables."
+                            text: "Promovemos la sreutilización de excedentes, reduciendo el impacto ambiental y fomentando prácticas responsables."
                         },
                         {
                             icon: Handshake,
